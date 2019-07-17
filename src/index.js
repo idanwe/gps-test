@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <h1>בדיקת GPS</h1>
       <GeoPosition>
-        {({ isGeoLoading, geoEnabled, geoError, coords }) => (
+        {({ requestGeo, isGeoLoading, geoEnabled, geoError, coords }) => (
           <div>
             <div>טוען: {isGeoLoading ? "כן" : "לא"}</div>
             <div>מאופשר: {geoEnabled ? "כן" : "לא"}</div>
@@ -32,15 +32,29 @@ function App() {
             ) : null}
 
             <br />
-            <a
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                window.location.reload();
-              }}
-            >
-              טען מחדש
-            </a>
+            <div>
+              <button
+                style={{ fontSize: 24, padding: "10px 20px" }}
+                onClick={e => {
+                  e.preventDefault();
+                  requestGeo();
+                }}
+              >
+                התחל בדיקה
+              </button>
+            </div>
+
+            <div style={{ marginTop: 50 }}>
+              <a
+                href="/"
+                onClick={e => {
+                  e.preventDefault();
+                  window.location.reload();
+                }}
+              >
+                טען מחדש
+              </a>
+            </div>
           </div>
         )}
       </GeoPosition>

@@ -22,6 +22,9 @@ function GeoError({ error }) {
       // message = "An unknown error occurred.";
       message = "שגיאה לא ידועה.";
       break;
+    default:
+      message = error.code;
+      break;
   }
 
   return message;

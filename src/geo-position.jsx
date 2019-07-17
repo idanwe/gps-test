@@ -2,7 +2,6 @@
 // based on the code from here: https://github.com/jaredpalmer/react-fns/blob/master/src/GeoPosition/GeoPosition.tsx
 // simplify the version to support just our usecase
 import React from "react";
-import PropTypes from "prop-types";
 
 export const POSITION_OPTIONS = {
   maximumAge: 0,
@@ -12,15 +11,15 @@ export const POSITION_OPTIONS = {
 
 class GeoPosition extends React.Component {
   state = {
-    isLoading: true
+    isLoading: false
   };
-
-  componentDidMount() {
-    this.requestGeo();
-  }
 
   requestGeo = () => {
     this.setState({ isLoading: true });
+    if (this.geoId) {
+      navigator.geolocation.clearWatch(this.geoId);
+    }
+
     this.geoId = navigator.geolocation.watchPosition(
       position =>
         this.setState({
@@ -44,6 +43,7 @@ class GeoPosition extends React.Component {
     const { children } = this.props;
 
     return children({
+      requestGeo: this.requestGeo,
       isGeoLoading: this.state.isLoading,
       geoEnabled: !!this.state.coords,
       geoError: this.state.error,
